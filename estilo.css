@@ -166,3 +166,85 @@ header h1 {
         gap: 15px;
     }
 }
+
+/* Formulário de tarefas */
+
+#formulario-tarefa {
+    background: #1a1a1a;
+    border: 1px solid #333333;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+#formulario-tarefa h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+#formulario-tarefa form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#formulario-tarefa input,
+#formulario-tarefa textarea,
+#formulario-tarefa select {
+    width: 100%;
+    background: #111111;
+    color: #ffffff;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    padding: 13px;
+    font-size: 14px;
+    outline: none;
+}
+
+#formulario-tarefa input:focus,
+#formulario-tarefa textarea:focus,
+#formulario-tarefa select:focus {
+    border-color: #facc15;
+}
+
+#formulario-tarefa textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+#formulario-tarefa input[type="date"] {
+    color-scheme: dark;
+}
+
+#formulario-tarefa button {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#formulario-tarefa button[type="button"] {
+    background: #333333;
+    color: #ffffff;
+}
+
+#formulario-tarefa button[type="button"]:hover {
+    background: #444444;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.form-buttons button[type="submit"] {
+    background: #ffffff;
+    color: #111111;
+}
+
+.form-buttons button[type="submit"]:hover {
+    background: #facc15;
+}
