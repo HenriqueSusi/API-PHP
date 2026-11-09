@@ -1,22 +1,20 @@
 <?php
-// Endereço da nossa API
-$url = "http://localhost/API_PHP/api/tarefa.php";
-// Inicializa o cURL
+$url = "http://localhost/API-PHP/api/tarefa.php";
+
 $curl = curl_init($url);
-// Configura a requisição GET
+
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-// Executa a requisição
+
 $resposta = curl_exec($curl);
-// Fecha a conexão
+
 curl_close($curl);
-// Transforma o JSON em array PHP
+
 $tarefas = json_decode($resposta, true);
-// Se não houver tarefas, cria um array vazio
+
 if (!is_array($tarefas)) {
     $tarefas = [];
 }
 
-// Calcula as estatísticas
 $total = count($tarefas);
 $pendentes = 0;
 $concluidas = 0;
@@ -135,6 +133,17 @@ foreach ($tarefas as $tarefa) {
 ?>">
     <?php echo htmlspecialchars($tarefa["prioridade"]); ?>
         </span>
+        <div class="button">
+    <button class="btn-editar"
+        onclick="editarTarefa(ID_DA_TAREFA)">
+        EDITAR
+    </button>
+
+    <button class="btn-excluir"
+        onclick="excluirTarefa(ID_DA_TAREFA)">
+        DELETAR
+    </button>
+</div>
     </div>
 
 <?php endforeach; ?>

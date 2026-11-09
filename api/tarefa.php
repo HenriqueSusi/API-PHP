@@ -21,16 +21,15 @@ if ($metodo == "GET") {
 
 elseif ($metodo == "POST") {
 
-    // Recebe os dados enviados em JSON
+
     $dados = json_decode(file_get_contents("php://input"), true);
 
-    // Verifica se o título foi informado
     if (empty($dados["titulo"])) {
 
         http_response_code(400);
 
         echo json_encode([
-            "erro" => "O título da tarefa é obrigatório!"
+            "erro" => "O título da tarefa é obrigatório"
         ]);
 
         exit;
@@ -55,7 +54,7 @@ elseif ($metodo == "POST") {
     http_response_code(201);
 
     echo json_encode([
-        "mensagem" => "Tarefa cadastrada com sucesso!",
+        "mensagem" => "Tarefa cadastrada",
         "id" => $conexao->lastInsertId()
     ]);
 
@@ -89,7 +88,7 @@ elseif ($metodo == "PUT") {
         http_response_code(404);
 
         echo json_encode([
-            "erro" => "Tarefa não encontrada!"
+            "erro" => "Tarefa não encontrada"
         ]);
 
         exit;
@@ -115,9 +114,28 @@ elseif ($metodo == "PUT") {
     ]);
 
     echo json_encode([
-        "mensagem" => "Tarefa atualizada com sucesso!"
+        "mensagem" => "Tarefa atualizada"
     ]);
 
+}
+
+elseif ($metodo == "DELETE") {
+    $id = $_GET ["id"] ?? null;
+    if (!$id) {
+        http_response_code(400);
+        echo json_encode([
+            "erro" => "Informe o ID"
+        ]);
+    exit;
+    }
+    $verificar = $conexao->prepare("SELECT id FROM tarefa WHERE id = :id");
+    $verificar->execute([":id" => $id]);
+
+    http_response_code(200);
+
+    echo json_encode([
+        "mensagem" => "Tarefa excluida"
+    ]);
 }
 
 else {
