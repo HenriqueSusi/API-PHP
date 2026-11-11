@@ -2,11 +2,8 @@
 $url = "http://localhost/API-PHP/api/tarefa.php";
 
 $curl = curl_init($url);
-
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
 $resposta = curl_exec($curl);
-
 curl_close($curl);
 
 $tarefas = json_decode($resposta, true);
@@ -50,8 +47,8 @@ if ($total > 0) {
         </header>
 
         <section class="welcome">
-            <h2>salve salve</h2>
-            <p>Porcentacem de tarefas feitas.</p>
+            <h2>E aí! Tudo bem por aqui?</h2>
+            <p>Dê uma olhada nas suas tarefas e no quanto já avançou.</p>
         </section>
 
         <section class="statistics">
@@ -125,62 +122,10 @@ if ($total > 0) {
                 endif;
             endforeach; 
 
-        <input type="date" name="data_prazo">
-
-        <div class="form-buttons">
-
-    <button type="button" onclick="fecharFormulario()">
-        Cancelar
-    </button>
-
-    <button type="submit">
-        Adicionar tarefa
-    </button>
-
-</div>
-
-    </form>
-
-</div>
-
-<?php foreach ($tarefas as $tarefa): ?>
-
-    <div class="task-card">
-        <div class="task-info">
-            <h3><?php echo htmlspecialchars($tarefa["titulo"]); ?></h3>
-
-            <p>
-                Prazo:
-                <?php echo date("d/m/Y", strtotime($tarefa["data_prazo"])); ?>
-            </p>
-        </div>
-
-       <span class="priority <?php
-            if ($tarefa["prioridade"] == "Alta") {
-                echo "high";
-            } elseif ($tarefa["prioridade"] == "Média") {
-                echo "medium";
-            }           
-            else {
-                echo "low";
-                }
-?>">
-    <?php echo htmlspecialchars($tarefa["prioridade"]); ?>
-        </span>
-        <div class="button">
-    <button class="btn-editar"
-        onclick="editarTarefa(ID_DA_TAREFA)">
-        EDITAR
-    </button>
-
-    <button class="btn-excluir"
-        onclick="excluirTarefa(ID_DA_TAREFA)">
-        DELETAR
-    </button>
-</div>
-    </div>
-
-<?php endforeach; ?>
+            if ($contador == 0):
+            ?>
+                <p>Nenhuma tarefa pendente por enquanto!</p>
+            <?php endif; ?>
 
         </section>
 

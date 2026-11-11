@@ -1,6 +1,6 @@
 <?php
 
-$url = "http://localhost/API_PHP/api/tarefa.php";
+$url = "http://localhost/API-PHP/api/tarefa.php";
 
 $curl = curl_init($url);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);

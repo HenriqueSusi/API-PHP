@@ -6,7 +6,7 @@ info:
   version: 1.0.0
 
 servers:
-  - url: http://localhost/API_PHP/api
+  - url: http://localhost/API-PHP/api
 
 tags:
   - name: Tarefas
