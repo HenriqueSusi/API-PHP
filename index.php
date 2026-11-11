@@ -18,13 +18,18 @@ if (!is_array($tarefas)) {
 $total = count($tarefas);
 $pendentes = 0;
 $concluidas = 0;
-foreach ($tarefas as $tarefa) {
 
+foreach ($tarefas as $tarefa) {
     if ($tarefa["status"] == "Pendente") {
         $pendentes++;
     } else {
         $concluidas++;
     }
+}
+
+$progresso = 0;
+if ($total > 0) {
+    $progresso = ($concluidas / $total) * 100;
 }
 ?>
 
@@ -33,7 +38,7 @@ foreach ($tarefas as $tarefa) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarefafa - Gerenciador de Tarefas</title>
+    <title>Tarefafa - Minhas Tarefas</title>
     <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
@@ -42,54 +47,83 @@ foreach ($tarefas as $tarefa) {
 
         <header>
             <h1>Tarefafa</h1>
-            <span class="user">Meu espaço</span>
         </header>
 
         <section class="welcome">
-            <h2>Minhas tarefas</h2>
-            <p>Organize seu dia e acompanhe seu progresso.</p>
+            <h2>salve salve</h2>
+            <p>Porcentacem de tarefas feitas.</p>
         </section>
 
         <section class="statistics">
-    <div class="stat-card">
-        <span>Total de tarefas</span>
-        <h3><?php echo $total; ?></h3>
-    </div>
+            <div class="stat-card">
+                <span>Total</span>
+                <h3><?php echo $total; ?></h3>
+            </div>
 
-    <div class="stat-card">
-        <span>Pendentes</span>
-        <h3><?php echo $pendentes; ?></h3>
-    </div>
+            <div class="stat-card">
+                <span>Pendentes</span>
+                <h3><?php echo $pendentes; ?></h3>
+            </div>
 
-    <div class="stat-card">
-        <span>Concluídas</span>
-        <h3><?php echo $concluidas; ?></h3>
-    </div>
-</section>
+            <div class="stat-card">
+                <span>Feitas</span>
+                <h3><?php echo $concluidas; ?></h3>
+            </div>
+        </section>
 
         <section class="tasks">
+            <h2>Progresso geral</h2>
+            <h3><?php echo round($progresso); ?>%</h3>
 
-            <div class="tasks-header">
-                <h2>Lista de tarefas</h2>
-                <button class="add-button" onclick="abrirFormulario()">
-                    + Nova tarefa
-                </button>
+            <div class="barra-progresso">
+                <div class="progresso" style="width: <?php echo $progresso; ?>%;"></div>
             </div>
-            <div id="formulario-tarefa" style="display: none;">
+        </section>
 
-    <h2>Nova tarefa</h2>
+        <section class="tasks">
+            <div class="tasks-header">
+                <h2>Próximas para fazer</h2>
+                <a href="tarefas.php" class="add-button">Ver todas</a>
+            </div>
 
-    <form id="form-tarefa">
+            <?php
+            $contador = 0;
+            foreach ($tarefas as $tarefa):
+                if ($tarefa["status"] == "Pendente" && $contador < 5):
+                    $contador++;
+            ?>
 
-        <input type="text" name="titulo" placeholder="Título da tarefa" required>
+                <div class="task-card">
+                    <div class="task-info">
+                        <h3><?php echo htmlspecialchars($tarefa["titulo"]); ?></h3>
+                        <p>
+                            Prazo: 
+                            <?php 
+                            if (!empty($tarefa["data_prazo"])) {
+                                echo date("d/m/Y", strtotime($tarefa["data_prazo"]));
+                            } else {
+                                echo "Sem prazo";
+                            }
+                            ?>
+                        </p>
+                    </div>
 
-        <textarea name="descricao" placeholder="Descrição da tarefa"></textarea>
+                    <span class="priority <?php 
+                        if ($tarefa["prioridade"] == "Alta") {
+                            echo "high";
+                        } elseif ($tarefa["prioridade"] == "Média") {
+                            echo "medium";
+                        } else {
+                            echo "low";
+                        }
+                    ?>">
+                        <?php echo htmlspecialchars($tarefa["prioridade"]); ?>
+                    </span>
+                </div>
 
-        <select name="prioridade">
-            <option value="Baixa">Baixa</option>
-            <option value="Média" selected>Média</option>
-            <option value="Alta">Alta</option>
-        </select>
+            <?php 
+                endif;
+            endforeach; 
 
         <input type="date" name="data_prazo">
 
@@ -152,63 +186,5 @@ foreach ($tarefas as $tarefa) {
 
     </main>
 
-<script>
-
-    function abrirFormulario() {
-        document.getElementById("formulario-tarefa").style.display = "block";
-    }
-
-    function fecharFormulario() {
-        document.getElementById("formulario-tarefa").style.display = "none";
-    }
-
-    document.getElementById("form-tarefa").addEventListener("submit", function(event) {
-
-    event.preventDefault();
-
-    const formulario = new FormData(this);
-
-    const titulo = formulario.get("titulo");
-    const descricao = formulario.get("descricao");
-    const prioridade = formulario.get("prioridade");
-    const data_prazo = formulario.get("data_prazo");
-
-    fetch("api/tarefa.php", {
-    method: "POST",
-
-    headers: {
-        "Content-Type": "application/json"
-    },
-
-    body: JSON.stringify({
-        titulo: titulo,
-        descricao: descricao,
-        prioridade: prioridade,
-        data_prazo: data_prazo
-    })
-
-})
-
-.then(resposta => resposta.json())
-
-.then(dados => {
-
-    alert(dados.mensagem);
-
-    location.reload();
-
-})
-
-.catch(erro => {
-
-    console.error("Erro:", erro);
-
-    alert("Erro ao cadastrar tarefa!");
-
-});
-
-});
-
-</script>
 </body>
 </html>

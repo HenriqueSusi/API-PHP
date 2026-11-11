@@ -1,0 +1,262 @@
+openapi: 3.0.3
+
+info:
+  title: API Tarefafa
+  description: API REST para gerenciamento de tarefas desenvolvida em PHP.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost/API_PHP/api
+
+tags:
+  - name: Tarefas
+    description: Operações de gerenciamento de tarefas
+
+paths:
+  /tarefa.php:
+    get:
+      tags:
+        - Tarefas
+      summary: Lista todas as tarefas
+      description: Retorna todas as tarefas cadastradas no banco de dados.
+      responses:
+        '200':
+          description: Lista de tarefas retornada com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tarefa'
+              example:
+                - id: 1
+                  titulo: Estudar PHP
+                  descricao: Estudar documentação de APIs
+                  prioridade: Alta
+                  data_prazo: '2026-11-15'
+                  status: Pendente
+                  criado_em: '2026-11-11 10:00:00'
+
+    post:
+      tags:
+        - Tarefas
+      summary: Cadastra uma nova tarefa
+      description: Cria uma tarefa no banco de dados.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TarefaEntrada'
+            example:
+              titulo: Estudar PHP
+              descricao: Estudar documentação de APIs
+              prioridade: Alta
+              data_prazo: '2026-11-15'
+      responses:
+        '201':
+          description: Tarefa cadastrada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TarefaCriada'
+              example:
+                mensagem: Tarefa cadastrada
+                id: 1
+        '400':
+          description: O título da tarefa não foi informado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              example:
+                erro: O título da tarefa é obrigatório
+
+    put:
+      tags:
+        - Tarefas
+      summary: Atualiza uma tarefa
+      description: Atualiza os dados de uma tarefa existente usando seu ID.
+      parameters:
+        - name: id
+          in: query
+          required: true
+          description: ID da tarefa que será atualizada.
+          schema:
+            type: integer
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TarefaAtualizacao'
+            example:
+              titulo: Estudar PHP e MySQL
+              descricao: Finalizar o projeto
+              prioridade: Média
+              data_prazo: '2026-11-15'
+              status: Pendente
+      responses:
+        '200':
+          description: Tarefa atualizada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mensagem'
+              example:
+                mensagem: Tarefa atualizada
+        '400':
+          description: O ID da tarefa não foi informado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              example:
+                erro: Informe o ID da tarefa!
+        '404':
+          description: Tarefa não encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              example:
+                erro: Tarefa não encontrada
+
+    delete:
+      tags:
+        - Tarefas
+      summary: Exclui uma tarefa
+      description: Exclui uma tarefa do banco de dados usando seu ID.
+      parameters:
+        - name: id
+          in: query
+          required: true
+          description: ID da tarefa que será excluída.
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Tarefa excluída com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mensagem'
+              example:
+                mensagem: Tarefa excluida
+        '400':
+          description: O ID da tarefa não foi informado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              example:
+                erro: Informe o ID
+        '404':
+          description: Tarefa não encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              example:
+                erro: Tarefa não encontrada
+
+components:
+  schemas:
+    Tarefa:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        titulo:
+          type: string
+          example: Estudar PHP
+        descricao:
+          type: string
+          nullable: true
+          example: Estudar documentação de APIs
+        prioridade:
+          type: string
+          example: Alta
+        data_prazo:
+          type: string
+          format: date
+          nullable: true
+          example: '2026-11-15'
+        status:
+          type: string
+          example: Pendente
+        criado_em:
+          type: string
+          example: '2026-11-11 10:00:00'
+
+    TarefaEntrada:
+      type: object
+      required:
+        - titulo
+      properties:
+        titulo:
+          type: string
+          example: Estudar PHP
+        descricao:
+          type: string
+          nullable: true
+          example: Estudar documentação de APIs
+        prioridade:
+          type: string
+          example: Alta
+        data_prazo:
+          type: string
+          format: date
+          nullable: true
+          example: '2026-11-15'
+
+    TarefaAtualizacao:
+      type: object
+      required:
+        - titulo
+      properties:
+        titulo:
+          type: string
+          example: Estudar PHP
+        descricao:
+          type: string
+          nullable: true
+          example: Finalizar o projeto
+        prioridade:
+          type: string
+          example: Média
+        data_prazo:
+          type: string
+          format: date
+          nullable: true
+          example: '2026-11-15'
+        status:
+          type: string
+          example: Pendente
+
+    Mensagem:
+      type: object
+      properties:
+        mensagem:
+          type: string
+          example: Tarefa atualizada
+
+    TarefaCriada:
+      type: object
+      properties:
+        mensagem:
+          type: string
+          example: Tarefa cadastrada
+        id:
+          type: integer
+          example: 1
+
+    Erro:
+      type: object
+      properties:
+        erro:
+          type: string
+          example: Tarefa não encontrada

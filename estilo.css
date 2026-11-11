@@ -1,15 +1,9 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
 body {
     background-color: #111111; 
     color: #f9fafb;
     min-height: 100vh;
     padding: 40px 20px;
+    font-family: "Comic Sans MS", "Comic Neue", cursive, sans-serif;
 }
 
 .container {
@@ -49,6 +43,23 @@ header h1 {
 
 .welcome p {
     color: #9ca3af;
+    margin-bottom: 15px;
+}
+
+.back-button {
+    display: inline-block;
+    background: #333333;
+    color: #ffffff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.back-button:hover {
+    background: #444444;
 }
 
 .statistics {
@@ -96,10 +107,28 @@ header h1 {
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
+    font-family: "Comic Sans MS", "Comic Neue", cursive, sans-serif;
 }
 
 .add-button:hover {
     background: #e5e7eb;
+}
+
+.filtros {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.filtros select {
+    background: #1a1a1a;
+    color: #ffffff;
+    border: 1px solid #333333;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    font-family: "Comic Sans MS", "Comic Neue", cursive, sans-serif;
 }
 
 .task-card {
@@ -146,6 +175,11 @@ header h1 {
     color: #86efac;
 }
 
+.button {
+    display: flex;
+    gap: 10px;
+}
+
 @media (max-width: 600px) {
     body {
         padding: 25px 15px;
@@ -163,7 +197,14 @@ header h1 {
     }
 
     .task-card {
+        flex-direction: column;
+        align-items: flex-start;
         gap: 15px;
+    }
+
+    .button {
+        width: 100%;
+        justify-content: flex-end;
     }
 }
 
@@ -175,13 +216,15 @@ header h1 {
     margin-bottom: 25px;
 }
 
-#formulario-tarefa h2 {
+#formulario-tarefa h2,
+#formulario-editar h2 {
     font-size: 20px;
     margin-bottom: 20px;
     color: #ffffff;
 }
 
-#formulario-tarefa form {
+#formulario-tarefa form,
+#formulario-editar form {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -189,7 +232,10 @@ header h1 {
 
 #formulario-tarefa input,
 #formulario-tarefa textarea,
-#formulario-tarefa select {
+#formulario-tarefa select,
+#formulario-editar input,
+#formulario-editar textarea,
+#formulario-editar select {
     width: 100%;
     background: #111111;
     color: #ffffff;
@@ -198,37 +244,47 @@ header h1 {
     padding: 13px;
     font-size: 14px;
     outline: none;
+    font-family: "Comic Sans MS", "Comic Neue", cursive, sans-serif;
 }
 
 #formulario-tarefa input:focus,
 #formulario-tarefa textarea:focus,
-#formulario-tarefa select:focus {
+#formulario-tarefa select:focus,
+#formulario-editar input:focus,
+#formulario-editar textarea:focus,
+#formulario-editar select:focus {
     border-color: #facc15;
 }
 
-#formulario-tarefa textarea {
+#formulario-tarefa textarea,
+#formulario-editar textarea {
     min-height: 100px;
     resize: vertical;
 }
 
-#formulario-tarefa input[type="date"] {
+#formulario-tarefa input[type="date"],
+#formulario-editar input[type="date"] {
     color-scheme: dark;
 }
 
-#formulario-tarefa button {
+#formulario-tarefa button,
+#formulario-editar button {
     padding: 12px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
+    font-family: "Comic Sans MS", "Comic Neue", cursive, sans-serif;
 }
 
-#formulario-tarefa button[type="button"] {
+#formulario-tarefa button[type="button"],
+#formulario-editar button[type="button"] {
     background: #333333;
     color: #ffffff;
 }
 
-#formulario-tarefa button[type="button"]:hover {
+#formulario-tarefa button[type="button"]:hover,
+#formulario-editar button[type="button"]:hover {
     background: #444444;
 }
 
