@@ -47,8 +47,8 @@ if ($total > 0) {
         </header>
 
         <section class="welcome">
-            <h2>E aí! Tudo bem por aqui?</h2>
-            <p>Dê uma olhada nas suas tarefas e no quanto já avançou.</p>
+            <h2>salve salve</h2>
+            <p>Dê uma olhada nas suas tarefas e no quanto já fez.</p>
         </section>
 
         <section class="statistics">
